@@ -52,8 +52,8 @@ summary(som_ef)
 # ---------------------------------------------------- Clustering ------------------------------------------------------------------------------####
 set.seed(4); umapSOMweights_ef<-uwot::umap(som_ef$codes[[1]],n_neighbors = 10,metric = 'euclidean')
 umapSOMweightsDf_ef<-data.frame(d1= umapSOMweights_ef[,1], d2 = umapSOMweights_ef[,2])
-set.seed(20); kmeansSom_ef<- NbClust::NbClust(umapSOMweightsDf_ef,  method = "average", index = c("all"))
-table(kmeansSom_ef$Best.partition)# best partition is N2
+set.seed(20); kmeansSom_ef<- NbClust::NbClust(umapSOMweightsDf_ef,  min.nc=2, max.nc=8,  method = "average", index = c("all"))
+table(kmeansSom_ef$Best.partition)
 cluster_assignment <- kmeansSom_ef$Best.partition[som_ef$unit.classif]
 table(cluster_assignment)
 calm800_old$cluster<-cluster_assignment 
